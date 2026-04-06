@@ -5,6 +5,25 @@ import { motion, AnimatePresence } from 'framer-motion';
 const Dashboard = () => {
   const [target, setTarget] = useState('');
   const [loading, setLoading] = useState(false);
+  const [scanResult, setScanResult] = useState<any>(null);
+
+  const handleScan = async () => {
+    if (!target) return;
+    setLoading(true);
+    try {
+      const response = await fetch('/api/analyze', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ target })
+      });
+      const data = await response.json();
+      setScanResult(data);
+    } catch (error) {
+      console.error('Scan failed:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="flex h-screen w-full bg-slate-950 text-slate-100 font-sans">
@@ -44,10 +63,15 @@ const Dashboard = () => {
                 className="w-full bg-slate-800 border-none rounded-full py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                 value={target}
                 onChange={(e) => setTarget(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleScan()}
               />
             </div>
-            <button className="bg-blue-600 hover:bg-blue-500 px-6 py-2 rounded-full text-sm font-semibold transition-all glow">
-              Scan Target
+            <button 
+              onClick={handleScan}
+              disabled={loading}
+              className="bg-blue-600 hover:bg-blue-500 disabled:bg-blue-800 px-6 py-2 rounded-full text-sm font-semibold transition-all glow flex items-center gap-2"
+            >
+              {loading ? <><Radar className="w-4 h-4 animate-spin" /> Analyzing...</> : 'Scan Target'}
             </button>
           </div>
           
