@@ -3,14 +3,19 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
+  --bh-bg: #FFFFFF;
+  --bh-fg: #000000;
+  --bh-border: #000000;
+  --bh-accent: #0055FF; /* Bauhaus Blue */
+  --bh-secondary: #F5F5F5;
 }
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
+  background-color: var(--bh-bg);
+  color: var(--bh-fg);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   min-height: 100vh;
 }
 
@@ -18,12 +23,49 @@ body {
   width: 100%;
 }
 
-.glass {
-  background: rgba(15, 23, 42, 0.7);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+/* Bauhaus specific grid/border styling */
+.bh-card {
+  background-color: var(--bh-bg);
+  border: 2px solid var(--bh-border);
+  padding: 1.5rem;
 }
 
-.glow {
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+.bh-border {
+  border: 1px solid var(--bh-border);
+}
+
+.bh-btn {
+  background-color: var(--bh-fg);
+  color: var(--bh-bg);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.2s;
+}
+
+.bh-btn:hover {
+  background-color: var(--bh-accent);
+  color: white;
+}
+
+.bh-input {
+  background-color: var(--bh-bg);
+  border: 2px solid var(--bh-border);
+  padding: 0.75rem 1rem;
+  font-weight: 500;
+}
+
+.bh-input:focus {
+  outline: none;
+  border-color: var(--bh-accent);
+}
+
+.bh-label {
+  font-size: 0.75rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: var(--bh-fg);
+  margin-bottom: 0.5rem;
+  display: block;
 }
